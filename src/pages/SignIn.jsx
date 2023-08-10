@@ -15,11 +15,11 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFromData] = useState(initialFormState)
   const { email, password } = formData;
-  
+
 
   const onChange = (e) => {
-    const {id,value} = e.target
-    setFromData((prevState) => ({...prevState,[id]:value}))
+    const { id, value } = e.target
+    setFromData((prevState) => ({ ...prevState, [id]: value }))
   }
 
   return (
@@ -53,7 +53,7 @@ const SignIn = () => {
                 src={visibilityIcon}
                 className='showPassword'
                 alt="showpassword"
-                onClick={() => setShowPassword((prev) =>!prev)} />
+                onClick={() => setShowPassword((prev) => !prev)} />
             </div>
 
 
