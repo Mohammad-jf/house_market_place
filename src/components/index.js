@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
+import PriveteRoute from "./PriveteRoute";
+import Spinner from './Spinner';
 
-export{
-    Navbar
-}
+export { Navbar, PriveteRoute ,Spinner};
