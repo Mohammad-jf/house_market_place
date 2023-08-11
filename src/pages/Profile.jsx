@@ -53,6 +53,8 @@ const Profile = () => {
       [id]: value
     }))
   }
+
+  
   return (
     <div className='profile'>
 
