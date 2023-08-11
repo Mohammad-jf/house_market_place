@@ -3,10 +3,14 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { doc, setDoc, serverTimestamp, } from 'firebase/firestore'
+import { db } from '../firebase.config'
+import { toast } from 'react-toastify'
+
 
 const SignUp = () => {
   const navigate = useNavigate();
-
   const initialFormState = {
     name: '',
     email: '',
@@ -23,6 +27,33 @@ const SignUp = () => {
     setFromData((prevState) => ({ ...prevState, [id]: value }))
   }
 
+
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user
+
+      // set the display name
+      updateProfile(auth.currentUser, {
+        displayName: name
+      });
+
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timeStamp = serverTimestamp();
+      await setDoc(doc(db, 'users', user.uid), formDataCopy);
+
+      navigate('/');
+    }
+    catch (err) {
+      toast.error("oops.... Something Went Wrong With Registration")
+    }
+  }
+
   return (
     <>
       <div className="pageContainer">
@@ -31,7 +62,7 @@ const SignUp = () => {
         </header>
 
         <main>
-          <form >
+          <form onSubmit={onSubmit}>
             <input
               type="text"
               className='nameInput'
