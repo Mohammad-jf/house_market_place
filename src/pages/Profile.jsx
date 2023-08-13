@@ -1,9 +1,8 @@
 import { getAuth, updateProfile } from 'firebase/auth'
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase.config'
-import { setDoc } from 'firebase/firestore';
-import { useEffect, useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 
@@ -11,14 +10,18 @@ const Profile = () => {
   const auth = getAuth();
   const navigate = useNavigate();
 
+
+  // state object
   const initialState = {
     name: auth.currentUser.displayName,
     email: auth.currentUser.email
   }
 
-  const [changeDetails, setChangeDetails] = useState(false);
+
   const [formData, setFormData] = useState(initialState);
+  const [changeDetails, setChangeDetails] = useState(false);
   const { name, email } = formData;
+
 
   const onLogOut = () => {
     auth.signOut();
@@ -32,19 +35,20 @@ const Profile = () => {
         // update displayName in fb
         await updateProfile(auth.currentUser, {
           displayName: name,
-        })
+        });
 
         // update in fs
         const userRef = doc(db, 'users', auth.currentUser.uid);
         await updateDoc(userRef, {
           name,
-        })
+        });
+
       }
     } catch (err) {
-      toast.error("could not update profile details...")
-
+      toast.error("could not update profile details...");
     }
   }
+
 
   const onChange = (e) => {
     const { id, value } = e.target;
@@ -54,7 +58,7 @@ const Profile = () => {
     }))
   }
 
-  
+
   return (
     <div className='profile'>
 
