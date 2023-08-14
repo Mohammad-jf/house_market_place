@@ -2,14 +2,15 @@ import { getAuth, updateProfile } from 'firebase/auth'
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase.config'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import arrowRight from '../assets/svg/keyboardArrowRightIcon.svg'
+import homeIcon from '../assets/svg/homeIcon.svg'
 
 
 const Profile = () => {
   const auth = getAuth();
   const navigate = useNavigate();
-
 
   // state object
   const initialState = {
@@ -105,6 +106,12 @@ const Profile = () => {
               className={!changeDetails ? 'profileEmail' : 'profileEmailActive'} />
           </form>
         </div>
+
+        <Link to='/create-listing' className='createListing'>
+          <img src={homeIcon} alt="home" />
+          <p>Sell or Rent your Home</p>
+          <img src={arrowRight} alt="arrow right" />
+        </Link>
       </main>
 
     </div>

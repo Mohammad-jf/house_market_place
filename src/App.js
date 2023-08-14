@@ -12,6 +12,7 @@ import {
   SignIn,
   SignUp,
   Category,
+  CreateListing
 } from "./pages";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<FrogotPassword />} />
+          <Route path="/create-listing" element={<CreateListing />} />
         </Routes>
         <Navbar />
       </Router>
