@@ -12,7 +12,8 @@ import {
   SignIn,
   SignUp,
   Category,
-  CreateListing
+  CreateListing,
+  Listing
 } from "./pages";
 
 function App() {
@@ -23,8 +24,9 @@ function App() {
           <Route path="/" element={<Expore />} />
           <Route path="/offers" element={<Offers />} />
           <Route path="/category/:categoryname" element={<Category />} />
+          <Route path="/category/:categoryname/:listingid" element={<Listing />} />
           <Route path="/profile" element={<PriveteRoute />}>
-              <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
