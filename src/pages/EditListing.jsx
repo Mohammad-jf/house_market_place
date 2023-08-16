@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from './../components/Spinner';
 import {
     getStorage,
@@ -8,7 +8,7 @@ import {
     uploadBytesResumable,
     getDownloadURL,
 } from 'firebase/storage'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { doc, updateDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import { v4 as uuidv4 } from 'uuid'
@@ -17,8 +17,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 
 
-const CreateListing = () => {
-
+const EditListing = () => {
     const initialState = {
         type: 'rent',
         name: '',
@@ -37,12 +36,15 @@ const CreateListing = () => {
 
     // states
     const [formData, setFormData] = useState(initialState)
+    const [listing, setListing] = useState(null);
     const [loading, setLoading] = useState(false);
     const [geoLocationEnabled, setGeoLocationEnabled] = useState(true);
+
 
     // initialize auth and navigate
     const auth = getAuth();
     const navigate = useNavigate();
+    const params = useParams()
 
 
     // destructuring values from formData state
@@ -62,8 +64,15 @@ const CreateListing = () => {
         longitude
     } = formData
 
+    // redirect if listing is not user's 
+    useEffect(() => {
+        if (listing && listing.userRef !== auth.currentUser.uid) {
+            toast.error("you can not edit that listing!");
+            navigate('/')
+        }
+    })
 
-    // add the userRef from auth prop to form data
+    // set userRef to loggedin user
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -74,6 +83,31 @@ const CreateListing = () => {
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+
+
+    // get the doc and set it to form data
+    useEffect(() => {
+        setLoading(true);
+
+        const getListing = async () => {
+            const docRef = doc(db, 'listings', params.listingId);
+            const docSnap = await getDoc(docRef)
+
+            if (docSnap.exists()) {
+                setListing(docSnap.data());
+                setFormData({ ...docSnap.data() });
+                setLoading(false);
+            } else {
+                navigate('/');
+                toast.error("listing does not Exist..");
+            }
+
+        }
+
+
+        getListing();
+    }, [params.listingId, navigate])
 
 
 
@@ -92,6 +126,7 @@ const CreateListing = () => {
             setLoading(false);
             toast.error("max 6 images");
         }
+
 
         // store images in firebase
         const storeImage = async (image) => {
@@ -130,8 +165,7 @@ const CreateListing = () => {
         }
 
 
-
-        // get an image url fir every image
+        // add image urls in an array
         const imageUrls = await Promise.all(
             [...images].map((image) => storeImage(image))
         ).catch(() => {
@@ -142,7 +176,7 @@ const CreateListing = () => {
 
 
 
-        // add imageUrls in formData obj
+        // add the image urls in form data
         const formDataCopy = {
             ...formData,
             imageUrls,
@@ -153,8 +187,10 @@ const CreateListing = () => {
 
         !formDataCopy.offer && delete formDataCopy.discountedPrice;
 
-        // add doc in firestore
-        const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
+
+        // update listing
+        const docRef = doc(db, 'listings', params.listingId);
+        await updateDoc(docRef, formDataCopy);
 
         setLoading(false)
         toast.success("listing saved")
@@ -204,7 +240,7 @@ const CreateListing = () => {
     return (
         <div className="profile">
             <header>
-                <p className="pageHeader">Create a Listing</p>
+                <p className="pageHeader">Edit Listing</p>
             </header>
 
             <main>
@@ -444,7 +480,7 @@ const CreateListing = () => {
                         required
                     />
                     <button type='submit' className='primaryButton createListingButton'>
-                        Create Listing
+                        Edit Listing
                     </button>
 
                 </form>
@@ -453,4 +489,4 @@ const CreateListing = () => {
     )
 }
 
-export default CreateListing
+export default EditListing

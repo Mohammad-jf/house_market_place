@@ -107,6 +107,11 @@ const Profile = () => {
   }
 
 
+  const onEdit = (id) => {
+    navigate(`/edit-listing/${id}`)
+  }
+
+
   return loading ? <Spinner /> : (
     <div className='profile'>
 
@@ -170,6 +175,7 @@ const Profile = () => {
                   id={listing.id}
                   key={listing.id}
                   onDelete={() => onDelete(listing.id)}
+                  onEdit={() => onEdit(listing.id)}
                 />))}
             </ul>
           </>

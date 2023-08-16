@@ -53,6 +53,9 @@ const Slider = () => {
         fetchListing();
     }, []);
 
+    if (listings?.length === 0) {
+        return <></>
+    }
 
     return loading ? <Spinner /> : (
         <>

@@ -15,6 +15,7 @@ import {
   CreateListing,
   Contact,
   Listing,
+  EditListing,
 } from "./pages";
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/contact/:landlordId" element={<Contact />} />
           <Route path="/forgot-password" element={<FrogotPassword />} />
+          <Route path="/edit-listing/:listingId" element={<EditListing />} />
           <Route path="/create-listing" element={<CreateListing />} />
         </Routes>
         <Navbar />
