@@ -13,7 +13,8 @@ import {
   SignUp,
   Category,
   CreateListing,
-  Listing
+  Contact,
+  Listing,
 } from "./pages";
 
 function App() {
@@ -24,12 +25,16 @@ function App() {
           <Route path="/" element={<Expore />} />
           <Route path="/offers" element={<Offers />} />
           <Route path="/category/:categoryname" element={<Category />} />
-          <Route path="/category/:categoryname/:listingid" element={<Listing />} />
+          <Route
+            path="/category/:categoryname/:listingid"
+            element={<Listing />}
+          />
           <Route path="/profile" element={<PriveteRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/contact/:landlordId" element={<Contact />} />
           <Route path="/forgot-password" element={<FrogotPassword />} />
           <Route path="/create-listing" element={<CreateListing />} />
         </Routes>

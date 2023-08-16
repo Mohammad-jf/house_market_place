@@ -1,4 +1,5 @@
 import Category from "./Category";
+import Contact from "./Contact";
 import CreateListing from "./CreateListing";
 import Expore from "./Explore";
 import FrogotPassword from "./FrogotPassword";
@@ -18,4 +19,5 @@ export {
   Category,
   CreateListing,
   Listing,
+  Contact
 };
