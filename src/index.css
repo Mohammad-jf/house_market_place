@@ -419,15 +419,39 @@ button {
 }
 
 .categoryListingImg {
-  width: 30%;
-  height: 100px;
+  width: 29%;
+  height: 135px;
   border-radius: 1.5rem;
   object-fit: cover;
 }
+
+@media (min-width: 624px) {
+  .categoryListingImg {
+    width: 28%;
+    object-fit: "cover";
+    height: 200px;
+  }
+}
+@media (min-width: 800px) {
+  .categoryListingImg {
+    width: 28%;
+    object-fit: "cover";
+    height: 225px;
+  }
+}
 @media (min-width: 1024px) {
   .categoryListingImg {
-    width: 19%;
-    height: 217px;
+    width: 20%;
+    object-fit: "cover";
+    height: 210px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .categoryListingImg {
+    width: 17%;
+    object-fit: "cover";
+    height: 225px;
   }
 }
 

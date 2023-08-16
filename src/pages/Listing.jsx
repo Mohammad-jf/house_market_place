@@ -6,9 +6,8 @@ import { db } from '../firebase.config'
 import Spinner from './../components/Spinner';
 import shareIcon from '../assets/svg/shareIcon.svg'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import "swiper/css/bundle";
-// SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 
 
@@ -30,7 +29,6 @@ const Listing = () => {
 
             if (docSnap.exists()) {
                 setListing(docSnap.data())
-                console.log(docSnap.data());
                 setLoading(false);
             }
         }
@@ -55,13 +53,6 @@ const Listing = () => {
                     {listing.imageUrls.map((url, index) => (
                         <SwiperSlide key={index}>
                             <div className="swiper-container">
-                                {/* <div className='swiperSlideDiv'
-                                    style={{
-                                        background: `url(${listing.imageUrls[index]})center no-repeat`,
-                                        backgroundSize: 'cover',
-                                        
-                                    }} >
-                                </div> */}
                                 <img src={listing?.imageUrls[index]} alt="img" className='swiperSlideDiv' />
                             </div>
                         </SwiperSlide>))}

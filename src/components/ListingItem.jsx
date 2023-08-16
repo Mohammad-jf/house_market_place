@@ -15,28 +15,28 @@ const ListingItem = ({ listing, id, onDelete }) => {
 
 
                 <div className="categoryListingDetails">
-                        <p className="categoryListingLocation">{listing.location}</p>
-                        <p className="categoryListingName">{listing.name}</p>
+                    <p className="categoryListingLocation">{listing.location}</p>
+                    <p className="categoryListingName">{listing.name}</p>
 
-                        <p className="categoryListingPrice">
-                            $ {listing.offer ? listing.discountedPrice : listing.regularPrice}
-                            {listing.type == 'rent' && ' / Month'}
+                    <p className="categoryListingPrice">
+                        $ {listing.offer ? listing.discountedPrice : listing.regularPrice}
+                        {listing.type == 'rent' && ' / Month'}
+                    </p>
+
+
+                    <div className="categoryListingInfoDiv">
+                        <img src={bedIcon} alt="bed" />
+                        <p
+                            className="categoryListingInfoText">
+                            {listing.bedrooms > 1 ? `${listing.bedrooms} bedrooms` : '1 bedroom'}
                         </p>
 
-
-                        <div className="categoryListingInfoDiv">
-                            <img src={bedIcon} alt="bed" />
-                                <p
-                                    className="categoryListingInfoText">
-                                    {listing.bedrooms > 1 ? `${listing.bedrooms} bedrooms` : '1 bedroom'}
-                                </p>
-
-                            <img src={bathtubIcon} alt="bathtub" />
-                                <p
-                                    className="categoryListingInfoText">
-                                    {listing.bathrooms > 1 ? `${listing.bathrooms} bathrooms` : '1 bathroom'}
-                                </p>
-                        </div>
+                        <img src={bathtubIcon} alt="bathtub" />
+                        <p
+                            className="categoryListingInfoText">
+                            {listing.bathrooms > 1 ? `${listing.bathrooms} bathrooms` : '1 bathroom'}
+                        </p>
+                    </div>
                 </div>
             </Link>
 
